@@ -1,6 +1,9 @@
+from django.http import response
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
+
+from rest_framework import status
 
 class MethodTest(TestCase):
 
@@ -57,6 +60,4 @@ class MethodTest(TestCase):
                 file.name, file.read(), content_type='file/csv'
             )
             sopport_file = file
-            data = {
-                
-            }
+            self.assertEqual(response.status_code, status.HTTP_201_CREATED)
