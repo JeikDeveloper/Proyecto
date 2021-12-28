@@ -31,20 +31,22 @@ class TaskAPiView(APIView):
 
 
 class TaskApiViewDetail(APIView):
+    """ Modificación y eliminación de tareas """
+    serializer_class = serializers.TasksSerializer
+
+    def get_object(self, pk):
+        try:
+            return models.Tasks.objects.get(pk=pk)
+        except models.Tasks.DoesNotExist:
+            raise status.HTTP_404_NOT_FOUND
+
     def put(self, request, pk, format=None):
         post = self.get_object(pk)
         serializer = self.serializer_class(post, data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save()   
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-    def patch(self, request, pk=None):
-        """ Maneja la actualización parcial de un objeto """
-        return Response({
-            'method': 'PATCH'
-        })
 
 
     def delete(self, request, pk, format=None):

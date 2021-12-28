@@ -2,9 +2,10 @@
 from django.urls import path
 
 # Local Models
-from task import views
+from task.views import TaskAPiView
+from task.views import TaskApiViewDetail
 
 urlpatterns = [
-    path('', views.TaskAPiView.as_view()),
-    #path('<id:pk>', views.TaskApiViewDetail.as_view()),
+    path('api', TaskAPiView.as_view()),
+    path('api/<int:pk>', TaskApiViewDetail.as_view()),
 ]
